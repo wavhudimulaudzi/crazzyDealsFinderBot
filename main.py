@@ -2,9 +2,11 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class Browser:
-    browser, service = None, None
+    browser, service, chromeOptions = None, None, None
 
     def __init__(self, driver: str):
         self.service = Service(driver)
@@ -27,10 +29,14 @@ class Browser:
         time.sleep(1)
 
     def login_takealot(self, username: str, password: str):
+        self.handle_cookies()
         self.add_input(by=By.ID, value='customer_login_email', text=username)
         self.add_input(by=By.ID, value='customer_login_password', text=password)
 
-        self.click_button(by=By.XPATH, value='//*[@id="body"]/div[10]/div/div/div/div/div/div/div[1]/div/div/div[1]/form/div[7]/div/button')
+        self.check_eCAPTCHA_box()
+        time.sleep(2)
+
+        self.click_button(by=By.XPATH, value='//*[@id="shopfront-app"]/div[4]/div/section/div[2]/div/div[1]/div/div/div/div[1]/form/div[7]/div/button')
 
     def login_to_takealot_by_google(self):
         self.click_button(by=By.CLASS_NAME, value='google-login-button-module_google-text_2VK9a')
@@ -44,32 +50,19 @@ class Browser:
 
 
     def check_eCAPTCHA_box(self):
-        iframe = self.browser.find_element(by=By.CLASS_NAME, value='recaptcha-checkbox ')
-        self.browser.switch_to(iframe)
+        WebDriverWait(self.browser, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR,"iframe[name^='a-'][src^='https://www.google.com/recaptcha/api2/anchor?']")))
+        WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@id='recaptcha-anchor']"))).click()
 
-        checkbox = self.browser.find_element(by=By.CLASS_NAME, value='recaptcha-checkbox-border')
-        checkbox.click()
-        time.sleep(2)
-
-        self.browser.switch_to.default_content()
-
-
-
+    def handle_cookies(self):
+        cookieButton = self.browser.find_element(By.CLASS_NAME, 'cookies-banner-module_dismiss-button_24Z98')
+        cookieButton.click()
 
 if __name__ == '__main__':
     browser = Browser('drivers/chromedriver')
 
     # opening the page
-    browser.open_page('https://www.takealot.com/')
-    time.sleep(3)
-
-    # clicking the login button to show the login form
-    browser.click_button(By.XPATH, value='//*[@id="shopfront-app"]/div[2]/div/div/div[2]/div/div[1]/ul/li[1]/a')
-    time.sleep(2)
-
-    # validating if robot or not
-    browser.check_eCAPTCHA_box()
-    time.sleep(3)
+    browser.open_page('https://www.takealot.com/account/login')
+    # time.sleep(1)
 
     browser.login_takealot('techsavvy094@gmail.com', 'Techsavvy@123')
     time.sleep(10)
