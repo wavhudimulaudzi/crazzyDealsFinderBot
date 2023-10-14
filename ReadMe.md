@@ -1,7 +1,9 @@
 # CrazzyDealsFinderBot
 This is a bot that will scrape website like takealot and onedayonly and find crazydeals and notify the user about the deals
 
-### Instructions as you pick a task and complete it as you complete a task or the task that you have picked you can just add your name to the task you are doing and make sure you also communicate it with the rest of the team
+### Instructions as you pick a task and complete it as you complete a task or the task that you have picked you can just add your name to the task you are doing and make sure you also communicate it with the rest of the team.
+
+### Don't forget to have fun while completing the task :)
 
 # TASKS
 
