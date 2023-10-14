@@ -5,6 +5,11 @@ This is a bot that will scrape website like takealot and onedayonly and find cra
 
 ### Don't forget to have fun while completing the task :)
 
+# Instructions to Run the CrazzyDealsBot
+I am definitely going to insult anymore 10-years of professional engineering experience here. I am positive you can figure out how to run the app.
+
+Anyway for those who doesn't want to waste time setting up the environment I have created a bash scripts `setup.sh` and `run.sh`
+
 # TASKS
 
 - Logging in: You'd probably want to use a session in requests to handle this.
