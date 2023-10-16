@@ -34,7 +34,7 @@ class Browser:
         self.add_input(by=By.ID, value='customer_login_password', text=password)
 
         self.check_eCAPTCHA_box()
-        time.sleep(2)
+        time.sleep(4)
 
         self.click_button(by=By.XPATH, value='//*[@id="shopfront-app"]/div[4]/div/section/div[2]/div/div[1]/div/div/div/div[1]/form/div[7]/div/button')
 
